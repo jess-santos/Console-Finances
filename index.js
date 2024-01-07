@@ -86,3 +86,54 @@ var finances = [
     ['Jan-2017', 138230],
     ['Feb-2017', 671099],
 ];
+
+console.log('Financial Analysis');
+console.log('----------------------------');
+
+var numberOfMonths = finances.length;
+console.log("Total Months:", numberOfMonths);
+
+var netTotal = finances.reduce(function (total, month) {
+    return total + month[1];
+}, 0);
+
+console.log("Total:" + '$' + netTotal);
+
+var totalChange = 0;
+for (var monthIndex = 1; monthIndex < finances.length; monthIndex++) {
+    totalChange += finances[monthIndex][1] - finances[monthIndex - 1][1];
+}
+
+var averageChange = totalChange / (finances.length - 1);
+var roundedAverageChange = averageChange.toFixed(2);
+console.log("Average change: " + roundedAverageChange);
+
+var greatestIncrease = {
+    date: '',
+    amount: 0
+};
+
+for (var monthIndex = 1; monthIndex < finances.length; monthIndex++) {
+    var increase = finances[monthIndex][1] - finances[monthIndex - 1][1];
+    if (increase > greatestIncrease.amount) {
+        greatestIncrease.amount = increase;
+        greatestIncrease.date = finances[monthIndex][0];
+    }
+}
+
+console.log("Greatest Increase in Profits/Losses:", greatestIncrease.date, "($" + greatestIncrease.amount + ")");
+
+var greatestDecrease = {
+    date: '',
+    amount: 0
+};
+
+for (var monthIndex = 1; monthIndex < finances.length; monthIndex++) {
+    var decrease = finances[monthIndex - 1][1] - finances[monthIndex][1];
+    if (decrease > greatestDecrease.amount) {
+        greatestDecrease.amount = decrease;
+        greatestDecrease.date = finances[monthIndex][0];
+    }
+}
+
+console.log("Greatest Decrease in Profits/Losses:", greatestDecrease.date, "($" + greatestDecrease.amount + ")");
